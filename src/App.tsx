@@ -1,10 +1,20 @@
+import { PageLayout } from "./layouts/PageLayout";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Cart from "./pages/Cart";
+
 function App() {
 	return (
-		<>
-			<div className="flex justify-center content-center text-5xl text-red-600">
-				<p>Building shopping Cart...</p>
-			</div>
-		</>
+		<Router>
+			<PageLayout title="Shopping Cart">
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/cart" element={<Cart />} />
+				</Routes>
+			</PageLayout>
+		</Router>
 	);
 }
 

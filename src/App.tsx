@@ -8,7 +8,7 @@ import Products from "./pages/Products";
 function App() {
 	return (
 		<Router>
-			<PageLayout title="Shopping Cart">
+			<PageLayout title="AVD Records">
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/about" element={<About />} />

@@ -1,6 +1,4 @@
-import React from "react";
-
-const Cart: React.FC = () => {
+const Cart = () => {
 	return (
 		<>
 			<h1 className="text-3xl font-bold text-gray-900">Cart</h1>

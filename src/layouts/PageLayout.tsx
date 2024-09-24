@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Toaster } from "sonner";
 
 type PageLayoutProps = {
 	children: React.ReactNode;
@@ -12,13 +13,10 @@ export const PageLayout = ({ children, title }: PageLayoutProps) => {
 		<>
 			<div className="min-h-screen flex flex-col">
 				<Header title={title} />
-				<main className="flex-grow">
-					<div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-						<div className="px-4 py-6 sm:px-0">{children}</div>
-					</div>
-				</main>
+				<main className="flex-grow">{children}</main>
 				<Footer />
 			</div>
+			<Toaster theme="system" richColors />
 		</>
 	);
 };

@@ -1,10 +1,18 @@
-import React from "react";
+import Hero from "../components/ui/Hero";
+import BentoGrid from "../components/ui/BentoGrid";
+import VinylList from "../components/VinylList";
 
-const Home: React.FC = () => {
+const Home = () => {
 	return (
 		<>
-			<h1 className="text-3xl font-bold text-gray-900">Home</h1>
-			<p className="text-lg text-gray-700">Welcome to the home page!</p>
+			<Hero />
+			<BentoGrid>
+				<div className="col-span-2 row-span-2 bg-black h-full w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2"></div>
+				<div className="col-span-2 row-span-2 bg-red-700 h-full w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-1 md:row-span-1 lg:col-span-2 lg:row-span-3"></div>
+				<div className="col-span-1 row-span-1 bg-green-700 h-48 w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1"></div>
+				<div className="col-span-1 row-span-1 bg-blue-700 h-48 w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1"></div>
+			</BentoGrid>
+			<VinylList />
 		</>
 	);
 };

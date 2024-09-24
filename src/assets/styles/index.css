@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: "CustomFont1";
+	src: url("../fonts/Blonde.otf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "CustomFont2";
+	src: url("../fonts/Longhaul.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	color-scheme: light dark;
@@ -12,15 +26,21 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	--red-primary: #c1121f;
+	--red-secondary: #780000;
+	--blue-primary: #003049;
+	--blue-secondary: #669bbc;
+	--bg-white: #fdf0d5;
 }
 
 @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
-		background-color: #ffffff;
+		background-color: var(--bg-white);
 	}
 	a:hover {
-		color: #747bff;
+		color: var(--blue-primary);
 	}
 	button {
 		background-color: #f9f9f9;

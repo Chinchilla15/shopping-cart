@@ -14,6 +14,17 @@ export default {
 				blueSecondary: "var(--blue-secondary)",
 				bgWhite: "var(--bg-white)",
 			},
+			keyframes: {
+				scroll: {
+					"0%": { transform: "translateX(0)" },
+					"100%": { transform: "translateX(-50%)" },
+				},
+			},
+			animation: {
+				"scroll-slow": "scroll 90s linear infinite",
+				"scroll-mid": "scroll 85s linear infinite",
+				"scroll-fast": "scroll 80s linear infinite",
+			},
 		},
 	},
 	plugins: [],

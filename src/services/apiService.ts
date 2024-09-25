@@ -12,6 +12,27 @@ export type Vinyl = {
 	genre?: string;
 };
 
+export type Collection = {
+	id: number;
+	basic_information: {
+		id: number;
+		cover_image: string;
+		title: string;
+		year: number;
+		formats: {
+			name: string;
+			qty: string;
+			descriptions: string[];
+		}[];
+		artists: {
+			name: string;
+		}[];
+
+		genres: string[];
+		styles: string[];
+	};
+};
+
 export const getData = async (query: string): Promise<Vinyl[]> => {
 	const API_URL = `${BASE_URL}?q=${encodeURIComponent(query)}&key=${API_KEY}&secret=${API_SECRET}`;
 	try {
@@ -23,3 +44,17 @@ export const getData = async (query: string): Promise<Vinyl[]> => {
 		return [];
 	}
 };
+
+export const getCollection = async (): Promise<Collection[]> => {
+	const API_URL = `https://api.discogs.com/users/chinchilla_/collection/folders/0/releases?key=${API_KEY}&secret=${API_SECRET}`;
+	try {
+		const response = await fetch(API_URL);
+		const data = await response.json();
+		return data.releases as Collection[];
+	} catch (err) {
+		console.error("Error: ", err);
+		return [];
+	}
+};
+
+getCollection();

@@ -1,12 +1,5 @@
 import { Card, withClick } from "./ProductCard";
-
-type ItemProps = {
-	image: string;
-	description: string;
-	price: number;
-	genre: string;
-	artist: string;
-};
+import type { ItemProps } from "../../types";
 
 const Item = ({ image, description, price, genre, artist }: ItemProps) => {
 	return (

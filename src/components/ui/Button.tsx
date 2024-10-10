@@ -1,9 +1,5 @@
 import { Link } from "react-router-dom";
-
-type ButtonProps = {
-	content: string;
-	link?: string;
-};
+import type { ButtonProps } from "../../types";
 
 const Button = ({ content, link }: ButtonProps) => {
 	return (

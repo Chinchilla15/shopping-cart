@@ -6,10 +6,7 @@ import {
 	faSun,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-
-type HeaderProps = {
-	title: string;
-};
+import type { HeaderProps } from "../types";
 
 const Header = ({ title }: HeaderProps) => {
 	const [isScrolled, setIsScrolled] = useState<boolean>(false);

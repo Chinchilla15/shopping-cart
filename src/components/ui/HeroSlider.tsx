@@ -1,5 +1,6 @@
-import { getCollection, Collection } from "../../services/apiService";
+import { getCollection } from "../../services/apiService";
 import { useEffect, useState } from "react";
+import type { Collection } from "../../types";
 
 const HeroSlider = () => {
 	const [collection, setCollection] = useState<Collection[]>([]);

@@ -1,159 +1,145 @@
 import type { ComponentType } from "react";
-import { motion, useSpring } from "framer-motion";
+import { motion, useSpring, MotionValue } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-
-// --------------------------------------------
-// Learn more: https://www.framer.com/docs/guides/overrides/
-// Flip card component
-// --------------------------------------------
-
-type CardProps = {
-	image: string;
-	description: string;
-	width?: string;
-	height?: string;
-};
+import type { CardProps } from "../../types";
 
 export const Card = ({
 	image,
 	description,
-	width = "500px",
-	height = "500px",
+	width = "100%",
+	height = "100%",
+	variant,
 }: CardProps) => {
 	return (
-		<div
-			className="bg-white p-4 rounded shadow container"
-			style={{ width, height }}
-		>
-			<img src={image} alt={description} className="mb-4" />
-			<h3 className="text-lg font-bold">{description}</h3>
+		<div style={{ width, height }} className="w-full h-full">
+			{variant === "Front" ? (
+				<img
+					src={image}
+					alt={description}
+					className="w-full h-full object-cover"
+				/>
+			) : (
+				<div className="flex items-center justify-center w-full h-full bg-red-800">
+					<h3 className="text-lg font-bold text-white">
+						{description}
+					</h3>
+				</div>
+			)}
 		</div>
 	);
 };
 
-//Spring animation parameters
 const spring = {
 	type: "spring",
 	stiffness: 300,
 	damping: 40,
 };
 
-export function withClick(Component: any): ComponentType {
-	return (props) => {
+export function withClick<T extends CardProps>(
+	Component: ComponentType<T>
+): ComponentType<T> {
+	return (props: T) => {
 		const [isFlipped, setIsFlipped] = useState(false);
+		const ref = useRef<HTMLDivElement>(null);
 
-		const handleClick = () => {
-			setIsFlipped((prevState) => !prevState);
-		};
+		const rotateX = useSpring(0, spring) as MotionValue<number>;
+		const rotateY = useSpring(0, spring) as MotionValue<number>;
 
-		const [rotateXaxis, setRotateXaxis] = useState(0);
-		const [rotateYaxis, setRotateYaxis] = useState(0);
-		const ref = useRef(null);
+		const handleClick = () => setIsFlipped((prev) => !prev);
 
-		const handleMouseMove = (event: any) => {
+		const handleMouseMove = (event: React.MouseEvent) => {
 			const element = ref.current;
-			const elementRect = element.getBoundingClientRect();
-			const elementWidth = elementRect.width;
-			const elementHeight = elementRect.height;
-			const elementCenterX = elementWidth / 2;
-			const elementCenterY = elementHeight / 2;
-			const mouseX = event.clientY - elementRect.y - elementCenterY;
-			const mouseY = event.clientX - elementRect.x - elementCenterX;
-			const degreeX = (mouseX / elementWidth) * 20; //The number is the rotation factor
-			const degreeY = (mouseY / elementHeight) * 20; //The number is the rotation factor
-			setRotateXaxis(degreeX);
-			setRotateYaxis(degreeY);
+			if (element) {
+				const { width, height, left, top } =
+					element.getBoundingClientRect();
+				const mouseX = event.clientX - left - width / 2;
+				const mouseY = event.clientY - top - height / 2;
+				const rotateXValue = (mouseY / height) * 20;
+				const rotateYValue = (mouseX / width) * 20;
+				rotateX.set(-rotateXValue);
+				rotateY.set(rotateYValue);
+			}
 		};
 
-		const handleMouseEnd = () => {
-			setRotateXaxis(0);
-			setRotateYaxis(0);
+		const handleMouseLeave = () => {
+			rotateX.set(0);
+			rotateY.set(0);
 		};
-
-		const dx = useSpring(0, spring);
-		const dy = useSpring(0, spring);
 
 		useEffect(() => {
-			dx.set(-rotateXaxis);
-			dy.set(rotateYaxis);
-		}, [rotateXaxis, rotateYaxis]);
+			const updatePerspective = () => {
+				if (ref.current) {
+					const { width, height } =
+						ref.current.getBoundingClientRect();
+					ref.current.style.setProperty(
+						"--card-perspective",
+						`${Math.max(width, height) * 4}px`
+					);
+				}
+			};
+
+			const resizeObserver = new ResizeObserver(updatePerspective);
+			if (ref.current) {
+				resizeObserver.observe(ref.current);
+			}
+
+			updatePerspective();
+
+			return () => resizeObserver.disconnect();
+		}, []);
 
 		return (
-			<motion.div
-				onClick={handleClick}
-				transition={spring}
+			<div
+				ref={ref}
+				className="relative w-full h-full"
 				style={{
-					// perspective: "1200px", Uncomment this line to add perspective and 3d style
-					// transformStyle: "preserve-3d",
-					width: "500px",
-					height: "500px",
+					perspective: "var(--card-perspective, 1200px)",
+					aspectRatio:
+						props.width && props.height
+							? `${parseInt(props.width) / parseInt(props.height)}`
+							: "auto",
 				}}
 			>
 				<motion.div
-					ref={ref}
-					whileHover={{ scale: 1.1 }} //Change the scale of zooming in when hovering
+					onClick={handleClick}
 					onMouseMove={handleMouseMove}
-					onMouseLeave={handleMouseEnd}
-					transition={spring}
+					onMouseLeave={handleMouseLeave}
+					className="w-full h-full"
 					style={{
-						width: "100%",
-						height: "100%",
-						rotateX: dx,
-						rotateY: dy,
+						rotateX,
+						rotateY,
+						transformStyle: "preserve-3d",
 					}}
+					whileHover={{ scale: 1.05 }}
+					transition={spring}
 				>
-					<div
+					<motion.div
+						className="absolute w-full h-full"
+						animate={{ rotateY: isFlipped ? -180 : 0 }}
+						transition={spring}
 						style={{
-							// perspective: "1200px",
-							// transformStyle: "preserve-3d",
-							width: "100%",
-							height: "100%",
+							zIndex: isFlipped ? 0 : 1,
+							backfaceVisibility: "hidden",
+							backgroundColor: "#003049",
 						}}
 					>
-						<motion.div
-							animate={{ rotateY: isFlipped ? -180 : 0 }}
-							transition={spring}
-							style={{
-								width: "100%",
-								height: "100%",
-								zIndex: isFlipped ? 0 : 1,
-								backfaceVisibility: "hidden",
-								position: "absolute",
-							}}
-						>
-							<Component
-								{...props}
-								variant="Front"
-								style={{
-									width: "100%",
-									height: "100%",
-								}}
-							/>
-						</motion.div>
-						<motion.div
-							initial={{ rotateY: 180 }}
-							animate={{ rotateY: isFlipped ? 0 : 180 }}
-							transition={spring}
-							style={{
-								width: "100%",
-								height: "100%",
-								zIndex: isFlipped ? 1 : 0,
-								backfaceVisibility: "hidden",
-								position: "absolute",
-							}}
-						>
-							<Component
-								{...props}
-								variant="Back"
-								style={{
-									width: "100%",
-									height: "100%",
-								}}
-							/>
-						</motion.div>
-					</div>
+						<Component {...props} variant="Front" />
+					</motion.div>
+					<motion.div
+						className="absolute w-full h-full"
+						initial={{ rotateY: 180 }}
+						animate={{ rotateY: isFlipped ? 0 : 180 }}
+						transition={spring}
+						style={{
+							zIndex: isFlipped ? 1 : 0,
+							backfaceVisibility: "hidden",
+							backgroundColor: "#780000",
+						}}
+					>
+						<Component {...props} variant="Back" />
+					</motion.div>
 				</motion.div>
-			</motion.div>
+			</div>
 		);
 	};
 }

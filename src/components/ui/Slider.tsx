@@ -20,37 +20,54 @@ const SwiperParams: SwiperOptions = {
 		disableOnInteraction: false,
 	},
 	loop: true,
+	breakpoints: {
+		320: {
+			slidesPerView: 1,
+			spaceBetween: 10,
+		},
+
+		480: {
+			slidesPerView: 2,
+			spaceBetween: 20,
+		},
+
+		640: {
+			slidesPerView: 3,
+			spaceBetween: 30,
+		},
+	},
 };
 
 const mockImages = [
-	"https://via.placeholder.com/300x200?text=Image+1",
-	"https://via.placeholder.com/300x200?text=Image+2",
-	"https://via.placeholder.com/300x200?text=Image+3",
+	"https://placehold.co/300x200?text=Image+1",
+	"https://placehold.co/300x200?text=Image+2",
+	"https://placehold.co/300x200?text=Image+3",
+	"https://placehold.co/300x200?text=Image+4",
+	"https://placehold.co/300x200?text=Image+5",
+	"https://placehold.co/300x200?text=Image+6",
+	"https://placehold.co/300x200?text=Image+7",
+	"https://placehold.co/300x200?text=Image+8",
+	"https://placehold.co/300x200?text=Image+9",
 ];
 
 const Slider = () => {
 	return (
-		<>
-			<Swiper
-				{...SwiperParams}
-				centeredSlides={true}
-				spaceBetween={50}
-				className="h-full w-full"
-			>
-				{mockImages.map((image) => (
+		<div className="w-full px-4 py-8">
+			<Swiper {...SwiperParams} className="h-full w-full">
+				{mockImages.map((image, index) => (
 					<SwiperSlide
-						key={image}
-						className="flex justify-center w-full"
+						key={index}
+						className="flex justify-center items-center"
 					>
 						<img
 							src={image}
-							alt="Album Cover"
-							className=" object-contain"
+							alt={`Album Cover ${index + 1}`}
+							className="object-cover w-full h-full rounded-lg shadow-md"
 						/>
 					</SwiperSlide>
 				))}
 			</Swiper>
-		</>
+		</div>
 	);
 };
 

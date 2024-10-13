@@ -4,6 +4,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { SwiperOptions } from "swiper/types";
+import { HeadlineProps } from "../../types";
+import Headline from "./Headline";
 
 const SwiperParams: SwiperOptions = {
 	modules: [Navigation, Pagination, Autoplay],
@@ -50,9 +52,17 @@ const mockImages = [
 	"https://placehold.co/300x200?text=Image+9",
 ];
 
-const Slider = () => {
+const Slider = ({ title, subtitle, tagline, classes }: HeadlineProps) => {
 	return (
 		<div className="w-full px-4 py-8">
+			{(title || subtitle || tagline) && (
+				<Headline
+					title={title}
+					subtitle={subtitle}
+					tagline={tagline}
+					classes={classes}
+				/>
+			)}
 			<Swiper {...SwiperParams} className="h-full w-full">
 				{mockImages.map((image, index) => (
 					<SwiperSlide

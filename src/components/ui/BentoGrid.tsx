@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
-import { BentoGridProps, MotionDivProps } from "../../types";
+import { BentoGridProps, MotionDivProps, HeadlineProps } from "../../types";
+import Headline from "./Headline";
+
+interface ExtendedBentoGridProps extends BentoGridProps, HeadlineProps {}
 
 const MotionDiv = ({ children, className }: MotionDivProps) => {
 	return (
@@ -15,9 +18,25 @@ const MotionDiv = ({ children, className }: MotionDivProps) => {
 	);
 };
 
-const BentoGrid = ({ children }: BentoGridProps) => {
+const BentoGrid = ({
+	children,
+	title,
+	subtitle,
+	tagline,
+	classes,
+}: ExtendedBentoGridProps) => {
 	return (
 		<div className="grid gap-4 px-4 py-6 grid-cols-1 auto-rows-fr sm:grid-cols-2 lg:grid-cols-4">
+			{(title || subtitle || tagline) && (
+				<div className="col-span-full">
+					<Headline
+						title={title}
+						subtitle={subtitle}
+						tagline={tagline}
+						classes={classes}
+					/>
+				</div>
+			)}
 			<MotionDiv className="col-span-1 row-span-1 bg-black rounded-lg sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 min-h-[200px]">
 				{children[0]}
 			</MotionDiv>

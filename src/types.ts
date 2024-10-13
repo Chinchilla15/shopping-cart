@@ -53,3 +53,33 @@ export interface Collection {
 export interface BentoGridProps {
 	children: React.ReactNode[];
 }
+
+export interface MotionDivProps {
+	children: React.ReactNode;
+	className: string;
+}
+
+export interface CardProps {
+	image: string;
+	description: string;
+	width?: string;
+	height?: string;
+	variant?: "Front" | "Back";
+}
+
+export interface HeadlineProps {
+	title?: string;
+	subtitle?: string;
+	tagline?: string;
+	classes?: {
+		container?: string;
+		title?: string;
+		subtitle?: string;
+	};
+}
+
+export interface ContentProps {
+	image: string;
+	content: string;
+	buttonProps: ButtonProps;
+}

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getData, Vinyl } from "../services/apiService";
+import { useEffect, useState } from "react";
+import { getData } from "../services/apiService";
+import type { Vinyl } from "../types";
 
 const VinylList = () => {
 	const [vinyls, setVinyls] = useState<Vinyl[]>([]);

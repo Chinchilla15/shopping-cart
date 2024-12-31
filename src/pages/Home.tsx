@@ -1,20 +1,43 @@
-import Hero from "../components/ui/Hero";
 import BentoGrid from "../components/ui/BentoGrid";
-import VinylList from "../components/VinylList";
+import Hero from "../components/ui/Hero";
+import Content from "../components/ui/Content";
+// import VinylList from "../components/VinylList";
+// import CollectionList from "../components/CollectionList";
+import ClickableCard from "../components/ui/ProductCard";
+import Slider from "../components/ui/Slider";
+import ContentImage from "../assets/images/content-image.jpg";
 
-const Home = () => {
-	return (
-		<>
-			<Hero />
-			<BentoGrid>
-				<div className="col-span-2 row-span-2 bg-black h-full w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2"></div>
-				<div className="col-span-2 row-span-2 bg-red-700 h-full w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-1 md:row-span-1 lg:col-span-2 lg:row-span-3"></div>
-				<div className="col-span-1 row-span-1 bg-green-700 h-48 w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1"></div>
-				<div className="col-span-1 row-span-1 bg-blue-700 h-48 w-full rounded-lg sm:col-span-1 sm:row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1"></div>
-			</BentoGrid>
-			<VinylList />
-		</>
-	);
-};
+const Home = () => (
+	<>
+		<Hero />
+		<Content
+			image={ContentImage}
+			content="Welcome to our store! We are passionate about music and dedicated to bringing you the best vinyl records from around the world. Our collection features a wide range of genres and artists, ensuring that there is something for every music lover. Explore our shop and discover the perfect addition to your vinyl collection."
+			buttonProps={{ content: "Visit store", link: "/products" }}
+		/>
+		<Slider
+			title="Record avaialble for inmmediate delivery."
+			tagline="In Stock"
+			classes={{ title: "pb-8" }}
+		/>
+		<BentoGrid
+			title="Explore what we have to offer"
+			subtitle="Is this how you use a bento grid? I'm not sure. But it was fun to make!"
+			tagline="Explore our shop"
+		>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</BentoGrid>
+		<ClickableCard
+			description="This is the description"
+			image={"https://placehold.co/800x200?text=Image+1"}
+			variant="Front"
+			width="200px"
+			height="100px"
+		/>
+	</>
+);
 
 export default Home;

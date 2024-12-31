@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getCollection, Collection } from "../services/apiService";
+import { getCollection } from "../services/apiService";
+import type { Collection } from "../types";
 
 const CollectionList = () => {
 	const [collection, setCollection] = useState<Collection[]>([]);

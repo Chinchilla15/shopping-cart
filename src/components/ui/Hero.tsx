@@ -12,9 +12,9 @@ const Hero = () => {
 			{/* Content overlay */}
 			<div className="absolute inset-0 z-20 flex items-center justify-center">
 				<div className="text-center text-bgWhite px-4 sm:px-6 lg:px-8">
-					<h1 className="text-4xl font-extrabold font-custom1 sm:text-5xl md:text-7xl">
+					<h2 className="text-4xl font-extrabold font-custom1 sm:text-5xl md:text-7xl">
 						Welcome
-					</h1>
+					</h2>
 					<p className="mt-3 max-w-md mx-auto text-base sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
 						Need music? We've got you covered.
 					</p>
